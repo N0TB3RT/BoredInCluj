@@ -115,5 +115,6 @@ export default function App() {
 }
 
 // Simple styles for our buttons
+//
 const btnStyle = { backgroundColor: '#333', color: 'white', border: 'none', padding: '10px 15px', cursor: 'pointer' };
 const mainBtnStyle = { display: 'block', width: '300px', margin: '20px auto', padding: '15px', fontSize: '1.2rem', backgroundColor: '#00ffcc', color: 'black', fontWeight: 'bold', cursor: 'pointer', border: '2px solid #ff00ff' };
