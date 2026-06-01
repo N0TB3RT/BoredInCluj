@@ -1,0 +1,326 @@
+.archive-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* --- THE CYBER TABLE --- */
+.table-wrapper {
+    margin-bottom: 50px;
+    border-bottom: 1px dashed rgba(0, 217, 255, 0.3);
+    padding-bottom: 30px;
+}
+
+.cyber-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 1.1rem;
+}
+
+.cyber-table th {
+    color: #9b9baa;
+    padding: 15px 10px;
+    border-bottom: 1px solid #333;
+    font-weight: normal;
+    letter-spacing: 1px;
+}
+
+.cyber-table td {
+    padding: 15px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cyber-table tbody tr:hover { background: rgba(0, 217, 255, 0.05); }
+
+.col-id { color: #888; }
+.col-title { color: #ffffff; font-weight: bold; }
+.col-type { font-weight: bold; letter-spacing: 1px; }
+
+/* AI RATING & REPLAY BUTTON */
+.rating-stars {
+    color: #ffcc00;
+    letter-spacing: 2px;
+}
+
+.btn-table-action {
+    background: transparent;
+    border: 1px solid var(--main-color, #00d9ff);
+    color: var(--main-color, #00d9ff);
+    padding: 6px 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-table-action:hover:not(:disabled) {
+    background: var(--main-color, #00d9ff);
+    color: #000;
+    box-shadow: 0 0 10px var(--main-color, #00d9ff);
+}
+
+/* --- PAGINATION CONTROLS --- */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding-top: 30px;
+}
+
+.btn-page {
+    background: none;
+    border: none;
+    color: #555;
+    font-family: inherit;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 2px;
+}
+
+.btn-page:hover:not(:disabled) { color: #ffffff; }
+.page-indicator { color: #9b9baa; font-size: 1.2rem; letter-spacing: 2px; }
+.page-indicator .highlight { color: #ffffff; }
+
+/* =========================================
+   3D TELEMETRY CHARTS (HIGH-TECH HUD)
+   ========================================= */
+/* =========================================
+   TELEMETRY CHARTS (STRICT SIDE-BY-SIDE)
+   ========================================= */
+.telemetry-charts-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* CRITICAL: Forces the strict 50/50 split */
+    gap: 40px;
+    margin-top: 50px;
+    align-items: stretch; /* Ensures both boxes stretch to match each other's height */
+    perspective: 1200px;
+}
+
+.chart-box {
+    background: linear-gradient(135deg, rgba(5, 5, 12, 0.85) 0%, rgba(2, 2, 5, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 2px solid var(--main-color, #00d9ff);
+    padding: 35px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 217, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+/* High-tech corner brackets */
+.chart-box::before, .chart-box::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--main-color, #00d9ff);
+    pointer-events: none;
+}
+.chart-box::before { bottom: -2px; left: -2px; border-top: none; border-right: none; }
+.chart-box::after { bottom: -2px; right: -2px; border-top: none; border-left: none; }
+
+.chart-title {
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-top: 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 15px;
+    letter-spacing: 2px;
+    text-align: center;
+    text-shadow: 0 0 10px var(--main-color, #00d9ff);
+}
+
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 22px; /* Slightly more breathing room */
+    padding-top: 10px;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    animation: slideInRight 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+/* --- VECTOR STARS --- */
+.bar-label {
+    width: 95px;
+    display: flex;
+    justify-content: flex-end; /* Perfectly aligns the block to the right */
+}
+
+.star-active {
+    color: #ffcc00;
+    filter: drop-shadow(0 0 6px rgba(255, 204, 0, 0.6));
+    margin-left: 4px;
+    transition: all 0.3s;
+}
+
+.star-dim {
+    color: rgba(255, 255, 255, 0.05); /* Ghost stars keep the alignment perfect */
+    margin-left: 4px;
+}
+
+/* --- SLEEK PROGRESS BAR --- */
+.bar-track {
+    flex-grow: 1;
+    height: 8px; /* Thinner, sleeker profile */
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px; /* Pill-shaped edges */
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.8);
+    position: relative;
+}
+
+.bar-fill-premium {
+    height: 100%;
+    /* Smooth neon gradient instead of chunky blocks */
+    background: linear-gradient(90deg, transparent, var(--main-color, #00d9ff));
+    border-radius: 6px;
+    box-shadow: 0 0 12px var(--main-color, #00d9ff);
+    position: relative;
+    width: 0;
+    animation: growBar 1.2s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+    animation-delay: inherit;
+}
+
+/* The hot-white glowing tip of the laser bar */
+.bar-fill-premium::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -1px;
+    bottom: -1px;
+    width: 4px;
+    background: #ffffff;
+    box-shadow: 0 0 10px #ffffff, 0 0 20px var(--main-color, #00d9ff);
+    border-radius: 50%;
+}
+
+.bar-value {
+    width: 25px;
+    color: #fff;
+    font-size: 1.3rem;
+    text-align: right;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace; /* Technical readout font */
+}
+
+@keyframes growBar {
+    to { width: var(--target-width); }
+}
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* --- 2. 3D HOLOGRAPHIC DONUT CHART --- */
+.pie-chart-wrapper {
+    display: flex; align-items: center; justify-content: center;
+    gap: 50px; flex-grow: 1;
+    transform-style: preserve-3d;
+}
+
+.hologram-stage {
+    position: relative;
+    width: 180px; height: 180px;
+    perspective: 800px;
+}
+
+.pie-chart-3d {
+    width: 100%; height: 100%; border-radius: 50%;
+    -webkit-mask-image: radial-gradient(circle, transparent 50%, black 51%);
+    mask-image: radial-gradient(circle, transparent 50%, black 51%);
+
+    /* THE 3D TILT EFFECT */
+    transform: rotateX(60deg) rotateZ(0deg);
+    transform-style: preserve-3d;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+
+    /* Make it spin slowly */
+    animation: spinHolo 20s linear infinite;
+    position: relative;
+    z-index: 2;
+}
+
+/* The neon laser edge of the 3D donut */
+.pie-chart-3d::after {
+    content: '';
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.8);
+    pointer-events: none;
+}
+
+/* The glowing base under the hologram */
+.pie-shadow {
+    position: absolute;
+    bottom: -20px; left: 10%; width: 80%; height: 40px;
+    background: radial-gradient(ellipse, rgba(0, 217, 255, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(10px);
+    z-index: 1;
+    animation: pulseShadow 4s ease-in-out infinite;
+}
+
+@keyframes spinHolo {
+    100% { transform: rotateX(60deg) rotateZ(360deg); }
+}
+@keyframes pulseShadow {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.pie-legend {
+    display: flex; flex-direction: column; gap: 15px;
+    transform: translateZ(20px); /* Lifts legend forward in 3D space */
+}
+
+.legend-item {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 10px 15px; border: 1px solid rgba(255, 255, 255, 0.05);
+    opacity: 0;
+    animation: slideInRight 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+.color-box { width: 12px; height: 12px; box-shadow: 0 0 10px currentColor; }
+.legend-label { color: #e0e0e0; font-size: 1rem; letter-spacing: 1px; }
+
+/* Keep your existing Mobile @media block at the bottom! */
+
+/* =========================================
+   MOBILE RESPONSIVENESS HACKS
+   ========================================= */
+@media (max-width: 768px) {
+    .telemetry-charts-section {
+        grid-template-columns: 1fr;
+    }
+
+    .pie-chart-wrapper {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* TABLE FLIP HACK */
+    .cyber-table thead { display: none; }
+    .cyber-table, .cyber-table tbody, .cyber-table tr, .cyber-table td { display: block; width: 100%; }
+    .cyber-table tr { margin-bottom: 15px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-left: 4px solid var(--main-color, #00d9ff); }
+    .cyber-table td { display: flex; justify-content: space-between; align-items: center; text-align: right; padding: 12px 15px; border-bottom: 1px dotted rgba(255, 255, 255, 0.05); }
+    .cyber-table td:last-child { border-bottom: none; }
+
+    .cyber-table td::before {
+        content: attr(data-label);
+        text-align: left; color: #888899; font-size: 0.9rem; letter-spacing: 1px;
+    }
+}

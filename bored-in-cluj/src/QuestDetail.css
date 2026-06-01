@@ -1,0 +1,195 @@
+.quest-detail-container {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px 50px 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* --- HEADER --- */
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+    padding-bottom: 10px;
+}
+
+.btn-back {
+    background: transparent;
+    border: none;
+    color: #ff0055;
+    font-size: 1.3rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 2px;
+}
+
+.btn-back:hover { text-shadow: 0 0 10px rgba(255, 0, 85, 0.8); }
+.quest-id { color: #555; font-size: 1.2rem; }
+
+/* --- STACKED LAYOUT --- */
+.detail-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* --- 1. TITLE SECTION --- */
+.title-section { text-align: center; }
+
+.mission-title {
+    color: #ffffff;
+    font-size: 3.5rem; /* Bigger */
+    line-height: 1.1; /* FIXES THE OVERLAP */
+    margin: 0 0 10px 0;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
+.author-tag { color: #00d9ff; font-size: 1.2rem; letter-spacing: 1px;}
+
+/* --- 2. MEDIA SHOWCASE --- */
+.media-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: 350px;
+}
+
+.media-box {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #00d9ff;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.15);
+    overflow: hidden;
+    position: relative;
+}
+
+.location-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.8) contrast(1.2); /* Makes photos look grittier */
+}
+
+/* --- 3. BRIEFING PANEL --- */
+.briefing-panel {
+    background: rgba(10, 10, 20, 0.85);
+    border: 1px solid #333;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.mission-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.spec-box { display: flex; flex-direction: column; gap: 5px; }
+.spec-label { color: #00d9ff; font-size: 1.1rem; }
+.spec-val { color: #fff; font-size: 1.4rem; }
+.diff-stars { color: #ffaa00; text-shadow: 0 0 10px rgba(255, 170, 0, 0.5); }
+.gps-text { color: #00ffaa; font-size: 1.2rem; }
+.loc-name { color: #9b9baa; font-size: 0.9rem; }
+
+.desc-header { color: #00d9ff; font-size: 1.4rem; margin-bottom: 10px; }
+.mission-description p { color: #ddd; font-size: 1.4rem; line-height: 1.6; margin-bottom: 25px; }
+
+.conditions-array { display: flex; gap: 15px; }
+.cond-tag {
+    border: 1px solid #ffaa00;
+    color: #ffaa00;
+    padding: 5px 10px;
+    font-size: 1.1rem;
+    background: rgba(255, 170, 0, 0.1);
+}
+
+/* --- 4. AI TERMINAL --- */
+/* (Keeping all the AI animation classes exactly the same as before) */
+.ai-terminal { background: #05050a; border: 1px solid #00ffaa; padding: 20px; box-shadow: 0 0 20px rgba(0, 255, 170, 0.1); }
+.terminal-title { color: #00ffaa; font-size: 1.5rem; margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: center; }
+.scanner-screen { min-height: 250px; background: #020205; border: 1px solid #222; margin-top: 15px; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+.scanner-content { text-align: center; width: 100%; padding: 20px; }
+
+.scanner-content.idle p { color: #555; font-size: 1.3rem; margin-bottom: 20px; }
+.btn-upload { display: inline-block; border: 1px solid #00d9ff; color: #00d9ff; padding: 15px 30px; cursor: pointer; font-size: 1.3rem; transition: all 0.2s; }
+.btn-upload:hover { background: rgba(0, 217, 255, 0.1); box-shadow: 0 0 15px rgba(0, 217, 255, 0.4); }
+
+.blink { animation: blinker 1s linear infinite; color: #ffaa00; }
+@keyframes blinker { 50% { opacity: 0.3; } }
+.progress-bar { width: 80%; height: 5px; background: #222; margin: 20px auto; overflow: hidden; }
+.progress-fill { height: 100%; background: #ffaa00; width: 0%; animation: fillUp 1s forwards; }
+@keyframes fillUp { to { width: 100%; } }
+
+.analyzing { color: #00d9ff; text-align: left; padding: 40px; }
+.cyber-glitch { font-size: 1.3rem; margin-bottom: 15px; }
+.sub-log { color: #555; font-size: 1.1rem; margin: 5px 0; }
+.scan-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: #00d9ff; box-shadow: 0 0 10px #00d9ff; animation: scanDown 1.5s linear infinite; }
+@keyframes scanDown { 0% { top: 0; } 100% { top: 100%; } }
+
+.success h3 { color: #00ffaa; font-size: 2.2rem; margin: 0 0 10px 0; text-shadow: 0 0 10px rgba(0, 255, 170, 0.5); }
+.success p { color: #fff; font-size: 1.5rem; margin: 5px 0; }
+.xp-text { color: #ffaa00 !important; margin-bottom: 20px !important; }
+.btn-claim { background: #00ffaa; color: #000; border: none; padding: 15px 30px; font-size: 1.3rem; cursor: pointer; font-family: inherit; }
+
+.failed h3 { color: #ff0055; font-size: 2.2rem; margin: 0 0 10px 0; text-shadow: 0 0 10px rgba(255, 0, 85, 0.5); }
+.failed p { color: #fff; font-size: 1.3rem; margin-bottom: 20px; }
+.btn-retry { background: transparent; color: #ffaa00; border: 1px solid #ffaa00; padding: 15px 30px; font-size: 1.3rem; cursor: pointer; font-family: inherit; }
+
+.btn-gps {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: #00ffaa;
+    color: #000;
+    padding: 8px 15px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.4);
+    transition: all 0.2s;
+    z-index: 10;
+}
+
+.btn-gps:hover {
+    background: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (QUEST DETAIL)
+   ========================================= */
+@media (max-width: 768px) {
+    /* 1. Shrink the massive desktop title so it doesn't break boundaries */
+    .mission-title {
+        font-size: 2.2rem;
+    }
+
+    /* 2. Stack the Image and Map vertically */
+    .media-showcase {
+        grid-template-columns: 1fr; /* Forces 1 column instead of 2 */
+        height: auto; /* Removes the rigid 350px desktop height limit */
+    }
+
+    /* Give each stacked box a solid height so they don't collapse */
+    .media-box {
+        height: 250px;
+    }
+
+    /* 3. Stack the Mission Specs (Difficulty, Cost, Target GPS) */
+    .mission-specs {
+        grid-template-columns: 1fr; /* Stacks the 3 items vertically */
+        text-align: center; /* Centers them so they look deliberate */
+        gap: 20px;
+    }
+}

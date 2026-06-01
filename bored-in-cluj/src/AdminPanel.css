@@ -1,0 +1,587 @@
+.admin-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Header */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.admin-title {
+    color: #fff;
+    font-size: 2rem;
+    margin: 0 0 5px 0;
+    letter-spacing: 2px;
+}
+
+.admin-subtitle {
+    color: #00d9ff;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.btn-add-quest {
+    background: #00d9ff;
+    border: none;
+    color: #000;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-add-quest:hover {
+    background: #00ffaa;
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.4);
+}
+
+/* Data Table */
+.admin-table-wrapper {
+    background: rgba(5, 5, 12, 0.9);
+    border: 1px solid #333;
+    overflow-x: auto;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th, .admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid #222;
+}
+
+.admin-table th {
+    color: #555;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    background: #020205;
+}
+
+.admin-table td {
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(0, 217, 255, 0.05);
+}
+
+.row-archived td {
+    opacity: 0.5;
+}
+
+.cell-id { color: #555; font-family: monospace; }
+.cell-title { color: #fff; font-weight: bold; }
+.cell-diff { color: #ffaa00; }
+.cell-xp { color: #00ffaa; font-weight: bold; }
+
+.status-badge {
+    padding: 3px 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+.status-badge.active { background: rgba(0, 255, 170, 0.1); color: #00ffaa; border: 1px solid #00ffaa; }
+.status-badge.archived { background: rgba(255, 255, 255, 0.1); color: #888; border: 1px solid #555; }
+
+/* Actions */
+/* --- FIXED ACTIONS COLUMN --- */
+.cell-actions {
+    /* Removed display: flex to restore normal table cell borders */
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.btn-admin-edit, .btn-admin-delete {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    transition: color 0.2s;
+    vertical-align: middle;
+}
+
+.btn-admin-edit {
+    color: #00d9ff;
+    margin-right: 15px; /* Replaces the flex 'gap' */
+}
+.btn-admin-edit:hover { color: #fff; }
+
+.btn-admin-delete { color: #ff0055; }
+.btn-admin-delete:hover { color: #fff; }
+
+/* --- MODAL STYLES --- */
+.admin-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+    z-index: 999999; display: flex; justify-content: center; align-items: center;
+}
+
+.admin-modal-content {
+    background: #05050a; border: 1px solid #00d9ff;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    width: 100%; max-width: 600px; padding: 30px;
+}
+
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.span-2 {
+    grid-column: span 2;
+}
+
+.admin-input {
+    width: 100%;
+    background: #020205;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.admin-input:focus {
+    outline: none;
+    border-color: #00d9ff;
+}
+
+.admin-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.btn-save {
+    background: #00ffaa;
+    border: none;
+    color: #000;
+    padding: 15px;
+    flex: 1;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background: #00e699;
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.5);
+}
+
+/* --- ADMIN TABS --- */
+.admin-tabs { display: flex; gap: 15px; margin-top: 10px; }
+.tab-btn { background: transparent; border: none; color: #555; font-size: 1.1rem; font-weight: bold; cursor: pointer; padding-bottom: 5px; border-bottom: 2px solid transparent; font-family: inherit; }
+.tab-btn.active { color: #00d9ff; border-bottom-color: #00d9ff; }
+.badge-count { background: #ff0055; color: #fff; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; margin-left: 8px; }
+
+/* --- SUGGESTIONS --- */
+.suggestions-list { display: flex; flex-direction: column; gap: 15px; }
+.suggestion-card { background: rgba(5, 5, 12, 0.9); border: 1px solid #ffaa00; padding: 20px; border-left: 4px solid #ffaa00; }
+.sug-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.sug-header h3 { color: #fff; margin: 0; font-size: 1.3rem; }
+.sug-author { color: #ffaa00; font-size: 0.9rem; font-weight: bold; }
+.sug-desc { color: #ccc; margin-bottom: 10px; }
+.sug-loc { color: #00d9ff; font-weight: bold; margin-bottom: 15px; }
+.sug-actions { display: flex; gap: 15px; }
+
+/* --- EXPANDED MODAL UI --- */
+.wide-modal { max-width: 800px; max-height: 90vh; overflow-y: auto; }
+.form-section { background: rgba(255,255,255,0.02); border: 1px dashed #333; padding: 15px; margin-bottom: 15px; }
+.form-section h3 { color: #00ffaa; font-size: 0.85rem; letter-spacing: 2px; margin: 0 0 15px 0; border-bottom: 1px solid #222; padding-bottom: 5px; }
+.grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mt-1 { margin-top: 15px; } .mb-1 { margin-bottom: 10px; }
+
+.admin-img-preview { width: 100%; height: 100px; object-fit: cover; border: 1px solid #00d9ff; margin-bottom: 10px; border-radius: 4px; }
+.btn-admin-secondary { background: transparent; border: 1px solid #00d9ff; color: #00d9ff; padding: 8px; width: 100%; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.btn-admin-secondary:hover { background: #00d9ff; color: #000; }
+
+.simulated-map { background: #111; border: 1px dashed #00ffaa; height: 100px; display: flex; justify-content: center; align-items: center; color: #00ffaa; font-size: 0.8rem; letter-spacing: 1px; cursor: crosshair; transition: background 0.2s; }
+.simulated-map:hover { background: rgba(0, 255, 170, 0.1); }
+.coord-display { display: flex; justify-content: space-between; color: #555; font-size: 0.85rem; margin-top: 5px; font-family: monospace; }
+
+/* --- PAGINATION CONTROLS --- */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: rgba(5, 5, 12, 0.9); /* Matches the table wrapper */
+    border-top: 1px solid #222; /* Blends with the table rows */
+    gap: 20px;
+}
+
+.btn-page {
+    background: #020205;
+    border: 1px solid #00d9ff;
+    color: #00d9ff;
+    padding: 6px 15px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: all 0.2s;
+    border-radius: 2px;
+}
+
+.btn-page:hover:not(:disabled) {
+    background: rgba(0, 217, 255, 0.1);
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+}
+
+.btn-page:disabled {
+    border-color: #333;
+    color: #555;
+    background: transparent;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.page-indicator {
+    color: #aaa;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+/* --- VALIDATION ERROR STYLES --- */
+.error-text {
+    color: #ff0055;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    font-weight: bold;
+    display: block;
+    animation: fadeIn 0.2s ease-in;
+}
+
+.input-error {
+    border-color: #ff0055 !important;
+    background: rgba(255, 0, 85, 0.05) !important;
+}
+
+/* --- INTERACTIVE MAP --- */
+.interactive-map {
+    position: relative;
+    height: 180px; /* Slightly taller for better clicking */
+    padding: 0;
+    overflow: hidden;
+    cursor: crosshair;
+    border: 1px solid #00d9ff;
+    background: #020205;
+}
+
+.osm-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none; /* Crucial: lets the click pass through to your React onClick handler */
+    filter: invert(100%) hue-rotate(180deg) contrast(120%); /* Turns the map into dark mode! */
+    opacity: 0.6;
+}
+
+.map-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    font-weight: bold;
+    color: #00ffaa;
+    background: rgba(0,0,0,0.8);
+    padding: 5px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    transition: opacity 0.2s;
+}
+
+.interactive-map:hover .map-overlay {
+    opacity: 0; /* Hides the text when they move their mouse in to click */
+}
+
+.map-pin {
+    position: absolute;
+    transform: translate(-50%, -100%); /* Centers the bottom tip of the pin exactly on the click */
+    pointer-events: none;
+    z-index: 10;
+    animation: dropIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes dropIn {
+    0% { transform: translate(-50%, -150%); opacity: 0; }
+    100% { transform: translate(-50%, -100%); opacity: 1; }
+}
+
+.osm-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: auto; /* THIS UNLOCKS THE MAP FOR PANNING AND ZOOMING! */
+    filter: invert(90%) hue-rotate(180deg) contrast(110%); /* Matches user map styling */
+    opacity: 0.8;
+}
+
+/* --- ANALYTICS DASHBOARD --- */
+.admin-analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 20px;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.admin-chart-box {
+    background: rgba(10, 10, 15, 0.8);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-chart-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00d9ff, transparent);
+    opacity: 0.5;
+}
+
+.chart-header {
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 1px solid #222;
+    padding-bottom: 15px;
+}
+
+/* HORIZONTAL BAR CHART SYSTEM */
+.admin-bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.admin-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.admin-bar-label {
+    width: 100px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.admin-bar-track {
+    flex-grow: 1;
+    height: 12px;
+    background: #111;
+    border-radius: 6px;
+    border: 1px solid #222;
+    overflow: hidden;
+    position: relative;
+}
+
+.admin-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+.admin-fill-cyber {
+    background: linear-gradient(90deg, #00d9ff, #00ffaa);
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+}
+
+.admin-bar-value {
+    width: 30px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #aaa;
+    text-align: left;
+}
+
+@media (max-width: 900px) {
+    .admin-analytics-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- ADMIN TOOLBAR (SEARCH BAR) --- */
+.admin-toolbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.admin-search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px 18px;
+    background: rgba(10, 10, 15, 0.8);
+    border: 1px solid #333;
+    color: #00d9ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.admin-search-input::placeholder {
+    color: #555;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.admin-search-input:focus {
+    border-color: #00d9ff;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+    background: rgba(0, 217, 255, 0.05);
+}
+
+/* --- DONUT CHART SYSTEM --- */
+.admin-donut-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admin-donut-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.admin-donut-chart {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.1);
+    animation: spin-in 1s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+/* This creates the "Donut" by punching a hole in the solid pie chart */
+.admin-donut-hole {
+    width: 100px;
+    height: 100px;
+    background: #0a0a0f; /* Must match the exact background color of your chart box */
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+    z-index: 2;
+}
+
+.donut-total {
+    font-family: 'Orbitron', sans-serif;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.donut-label {
+    font-size: 0.7rem;
+    color: #888;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+.admin-donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.admin-legend-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+@keyframes spin-in {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@media (max-width: 500px) {
+    .admin-donut-wrapper {
+        flex-direction: column;
+    }
+}
+
+/* --- SORTABLE TABLE HEADERS --- */
+.sortable-header {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.sortable-header:hover {
+    background-color: rgba(0, 217, 255, 0.1);
+    color: #00d9ff;
+}
+
+.sort-arrow {
+    font-size: 0.75rem;
+    opacity: 0.5;
+    margin-left: 5px;
+    display: inline-block;
+    transition: opacity 0.2s ease;
+}
+
+.sortable-header:hover .sort-arrow {
+    opacity: 1;
+}   

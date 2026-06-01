@@ -1,184 +1,358 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+/* --- GLOBAL RESETS & FONTS --- */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+/* --- CYBER THEME VARIABLES --- */
+:root {
+  --main-color: #00d9ff;
+  --bg-glow: #001a33;
+  --grid-color: rgba(0, 217, 255, 0.6);
+}
+[data-theme="green"] { --main-color: #00ffaa; --bg-glow: #003311; --grid-color: rgba(0, 255, 170, 0.6); }
+[data-theme="yellow"] { --main-color: #ffcc00; --bg-glow: #332200; --grid-color: rgba(255, 204, 0, 0.6); }
+[data-theme="red"] { --main-color: #ff0055; --bg-glow: #330011; --grid-color: rgba(255, 0, 85, 0.6); }
+[data-theme="pink"] { --main-color: #ff00ff; --bg-glow: #330033; --grid-color: rgba(255, 0, 255, 0.6); }
+[data-theme="purple"] { --main-color: #9d00ff; --bg-glow: #220033; --grid-color: rgba(157, 0, 255, 0.6); }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+body {
+  background-color: #03050a;
+  background-image: radial-gradient(circle at 50% 100%, var(--bg-glow) 0%, #03050a 80%);
+  background-attachment: fixed;
+  color: #ffffff;
+  font-family: "VT323", "Courier New", Courier, monospace;
+  overflow-x: hidden;
+}
+/* --- CRITICAL RESETS --- */
+html, body, #root {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%; /* Changed from 100vw to prevent scrollbar math errors */
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-#center {
+.app-wrapper {
+  padding-top: 70px;
+  min-height: 100vh;
+  width: 100%; /* Changed from 100vw */
+  max-width: 100%;
+  overflow-x: hidden; /* This acts as a hard wall to stop the grid/menu from leaking */
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
-
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
-}
-
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
-}
-
-.ticks {
   position: relative;
+  z-index: 1;
+}
+
+.cyber-grid {
+  position: fixed;
+  bottom: 0;
+  left: -50vw;
+  width: 200vw;
+  height: 100vh;
+
+  /* Your exact, original styling */
+  background-image:
+          linear-gradient(var(--grid-color) 3px, transparent 3px),
+          linear-gradient(90deg, var(--grid-color) 3px, transparent 3px);
+  background-size: 60px 60px;
+  background-position: center bottom;
+
+  /* Your exact, original 3D geometry */
+  transform: perspective(600px) rotateX(70deg) translate3d(0, 0, 0);
+  transform-origin: bottom center;
+
+  /* GPU Layering (Keeps desktop smooth) */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: background-position;
+
+  /* The original fade horizon and blur */
+  z-index: -1;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to top, black 5%, transparent 40%);
+  mask-image: linear-gradient(to top, black 5%, transparent 40%);
+  filter: blur(0.5px);
+
+  animation: smoothScroll 2s linear infinite;
+}
+
+@keyframes smoothScroll {
+  from { background-position: center 0; }
+  to { background-position: center 60px; } /* Must match background-size */
+}
+/* --- CYBER NAVIGATION BAR --- */
+.top-navbar {
+  position: fixed; /* This guarantees it never leaves the screen */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px; /* Fixed height so we can pad around it */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  background: rgba(5, 5, 12, 0.9); /* Slightly darker to stand out */
+  border-bottom: 1px solid var(--main-color);
+  box-shadow: 0 4px 30px rgba(0, 217, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999; /* Forces it above literally everything else */
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Spaces the logo and title */
+  font-size: 2rem;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 217, 255, 0.6);
+  letter-spacing: 4px;
+  cursor: pointer;
+}
+
+.nav-logo-mini {
+  height: 45px;
+  width: auto;
+  filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.8));
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-btn {
+  display: flex; /* Aligns the icon and text horizontally */
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  background: none;
+  border: none;
+  outline: none; /* Removes the ugly default browser box */
+  color: #9b9baa;
+  font-size: 1.3rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 2px;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent; /* Prevents jumping when active */
+}
+
+.nav-btn:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.nav-btn.active {
+  color: var(--main-color);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+  border-bottom: 2px solid var(--main-color);
+}
+.nav-btn svg {
+  /* Makes the SVG icons inherit the glow of the text */
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.profile-btn { gap: 12px; }
+.nav-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #00d9ff;
+  object-fit: cover;
+}
+
+/* --- HUD BANNERS --- */
+.hud-banner {
   width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  z-index: 99;
+}
+.offline-banner { background: rgba(255, 0, 85, 0.2); border-bottom: 1px solid #ff0055; color: #ff0055; }
+.sync-banner { background: rgba(0, 217, 255, 0.2); border-bottom: 1px solid #00d9ff; color: #00d9ff; }
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
+.app-footer {
+  text-align: center;
+  padding: 25px 20px;
+  color: var(--main-color);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+
+  position: relative;
+  z-index: 10;
+}
+/* --- SUBTLE CRT SCANLINE OVERLAY --- */
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  /* Creates a 4px repeating line pattern */
+  background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+
+  z-index: 999999; /* Covers the entire UI */
+  pointer-events: none; /* CRITICAL: Lets you click "through" it */
+
+  /* Keep opacity low (0.3 - 0.5) to prevent eye strain and text blurring */
+  opacity: 0.35;
+}
+
+.page-transition {
+  width: 100%;
+  height: 100%;
+  /* The animation duration. Keep it fast (0.25s) so the app feels responsive */
+  animation: smoothMount 0.25s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes smoothMount {
+  0% {
+    opacity: 0;
+    transform: translateY(10px); /* Starts slightly lower */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* Snaps into place */
+  }
+}
+
+/* --- NAVBAR LIVE BADGE --- */
+.nav-btn-home {
+  position: relative;
+}
+
+.live-badge {
+  position: absolute;
+  top: -8px;
+  right: 50%;
+  transform: translateX(50%);
+  background: #ff0055;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px rgba(255, 0, 85, 0.6);
+  animation: pulseLive 1.5s infinite alternate;
+  pointer-events: none; /* So it doesn't block the button click */
+}
+
+@keyframes pulseLive {
+  0% { opacity: 0.8; transform: translateX(50%) scale(0.95); }
+  100% { opacity: 1; transform: translateX(50%) scale(1.05); }
+}
+
+/* Red styling for the abort button */
+.abort-action {
+  border-color: #ff0055 !important;
+  color: #ff0055 !important;
+}
+.abort-action:hover {
+  background: #ff0055 !important;
+  color: #fff !important;
+}
+
+/* --- MOBILE NAVIGATION --- */
+.hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--main-color, #00d9ff);
+  cursor: pointer;
+  z-index: 10001;
+  padding: 5px;
+  filter: drop-shadow(0 0 5px var(--main-color, #00d9ff));
+}
+
+.mobile-overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .top-navbar {
+    padding: 0 20px;
   }
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
+  .cyber-grid {
+    animation: none !important;
   }
-  &::after {
+
+  .brand-text {
+    font-size: 1.5rem; /* Shrink title slightly so it doesn't overlap */
+  }
+
+  .hamburger-btn {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 70px; /* Sits exactly below the navbar */
+    right: -100%; /* Hidden entirely off-screen to the right */
+    width: 250px;
+    height: calc(100vh - 70px);
+    background: rgba(5, 5, 12, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px;
+    gap: 30px;
+    transition: right 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+    border-left: 1px solid var(--main-color, #00d9ff);
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+  }
+
+  /* When toggled open, slide it in */
+  .nav-links.mobile-open {
     right: 0;
-    border-right-color: var(--border);
+  }
+
+  /* Make the buttons fill the width of the drawer */
+  .nav-btn {
+    width: 100%;
+    justify-content: flex-start;
+    font-size: 1.5rem;
+    padding-bottom: 10px;
+  }
+
+  /* The dark shadow that covers the Hub when menu is open */
+  .mobile-overlay {
+    display: block;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 70px);
+    background: rgba(0,0,0,0.6);
+    z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
   }
 }

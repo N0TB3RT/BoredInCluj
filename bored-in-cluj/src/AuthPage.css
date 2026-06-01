@@ -1,0 +1,358 @@
+/* --- Master Wrapper & Animated Grid --- */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0a0a14;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.cyber-grid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+            linear-gradient(rgba(0, 217, 255, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 217, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+    animation: moveGrid 15s linear infinite;
+    z-index: 0;
+}
+
+@keyframes moveGrid {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 50px; }
+}
+
+/* --- Layout Container --- */
+.auth-container {
+    display: flex;
+    width: 100%;
+    max-width: 1100px;
+    height: 600px;
+    background: rgba(10, 10, 20, 0.85);
+    border: 1px solid #00d9ff;
+    box-shadow: 0 0 30px rgba(0, 217, 255, 0.2);
+    border-radius: 8px;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+/* --- LEFT SIDE: Hologram Pitch --- */
+.auth-pitch {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    border-right: 1px solid rgba(0, 217, 255, 0.3);
+    perspective: 1000px;
+}
+
+.hologram-box {
+    text-align: center;
+    transition: transform 0.1s ease-out;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
+
+.hologram-logo-image {
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 0 15px rgba(0, 217, 255, 0.6));
+}
+
+.cyber-title {
+    font-size: 3.2rem;
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 20px rgba(0, 217, 255, 0.6);
+    font-family: "VT323", "Courier New", Courier, monospace;
+    font-weight: normal;
+    margin: 7px 0 10px 0;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    line-height: 1.2;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.pitch-divider {
+    width: 50px;
+    height: 3px;
+    background: #ffaa00;
+    margin: 20px auto;
+    box-shadow: 0 0 10px #ffaa00;
+}
+
+.pitch-subtitle {
+    color: #ffaa00;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+.pitch-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    color: #9b9baa;
+    font-size: 1.2rem;
+    line-height: 2;
+}
+
+.pitch-list span {
+    color: #b700ff;
+    margin-right: 10px;
+}
+
+/* --- RIGHT SIDE: Form Panel --- */
+.auth-panel {
+    flex: 1;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.panel-header {
+    display: flex;
+    margin-bottom: 40px;
+    border-bottom: 2px solid #333;
+}
+
+.toggle-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #9b9baa;
+    padding: 15px 0;
+    font-size: 1.2rem;
+    font-family: '"VT323", monospace';
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+}
+
+.toggle-btn:hover { color: white; }
+
+.toggle-btn.active {
+    color: #00ffaa;
+    border-bottom: 2px solid #00ffaa;
+    text-shadow: 0 0 8px rgba(0, 255, 170, 0.6);
+}
+
+/* Form Animations */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    flex-grow: 1;
+}
+
+.slide-in { animation: slideRight 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+.slide-in-alt { animation: slideLeft 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+@keyframes slideRight { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideLeft { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Inputs */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    color: #00d9ff;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+.input-group input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #333;
+    padding: 12px 15px;
+    color: white;
+    font-family: inherit;
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #b700ff;
+    background: rgba(183, 0, 255, 0.1);
+    box-shadow: 0 0 15px rgba(183, 0, 255, 0.3);
+}
+
+/* --- Login Options (Checkbox & Forgot Password) --- */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -10px;
+    font-size: 0.95rem;
+    font-family: '"VT323", monospace';
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #9b9baa;
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    accent-color: #00d9ff;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.forgot-password-btn {
+    background: none;
+    border: none;
+    color: #ffaa00;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.forgot-password-btn:hover {
+    color: #00d9ff;
+    text-shadow: 0 0 8px rgba(0, 217, 255, 0.6);
+}
+
+/* Submit Button */
+.btn-submit {
+    margin-top: 20px;
+    background: transparent;
+    color: #00ffaa;
+    border: 1px solid #00ffaa;
+    padding: 15px;
+    font-size: 1.3rem;
+    font-family: '"VT323", monospace';
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 0 0 5px rgba(0, 255, 170, 0.5);
+}
+
+.btn-submit:hover {
+    background: #00ffaa;
+    color: black;
+    box-shadow: 0 0 20px rgba(0, 255, 170, 0.5);
+}
+
+.auth-footer {
+    text-align: center;
+    color: #333;
+    margin-top: auto;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS (AUTH PAGE)
+   ========================================= */
+@media (max-width: 768px) {
+    /* 1. Break the side-by-side layout */
+    .auth-container {
+        flex-direction: column;
+        height: auto !important; /* Overrides the rigid 600px desktop height */
+        width: 100%;
+        max-width: 95%; /* Prevents it from touching the screen edges */
+        margin: 20px auto;
+        border-radius: 8px;
+    }
+
+    /* 2. Adjust the Pitch (Top Half) */
+    .auth-pitch {
+        width: 100%;
+        padding: 30px 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 217, 255, 0.3);
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .hologram-logo-image {
+        max-width: 150px; /* Scaled down for mobile */
+        width: auto;
+    }
+
+    .cyber-title {
+        font-size: 2.2rem; /* Scaled down so it fits */
+        letter-spacing: 4px;
+        white-space: normal; /* Allows wrapping if the screen is super narrow */
+    }
+
+    .pitch-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    .pitch-list {
+        font-size: 1rem; /* Slightly smaller for mobile readability */
+        line-height: 1.6;
+    }
+
+    /* 3. Adjust the Form Panel (Bottom Half) */
+    .auth-panel {
+        width: 100%;
+        padding: 30px 20px;
+    }
+
+    .panel-header {
+        flex-direction: column;
+        gap: 10px;
+        border-bottom: none;
+        margin-bottom: 25px;
+    }
+
+    .toggle-btn {
+        width: 100%;
+        border-bottom: 2px solid #333; /* Adds the border back to the individual buttons */
+    }
+
+    .login-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        margin-top: 5px;
+    }
+}
+
+/* --- VALIDATION ERROR STYLING --- */
+.cyber-error {
+    color: #ff0055;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    margin-top: -3px;
+    text-shadow: 0 0 5px rgba(255, 0, 85, 0.5);
+    animation: glitch-blink 0.2s ease-in-out;
+}
+
+.input-error {
+    border-color: #ff0055 !important;
+    background: rgba(255, 0, 85, 0.05) !important;
+    box-shadow: 0 0 10px rgba(255, 0, 85, 0.2) !important;
+}
+
+@keyframes glitch-blink {
+    0% { opacity: 0; transform: translateX(-5px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
