@@ -153,6 +153,8 @@ export default function AuthPage({ onLogin }) {
                     setIsMfaMode(true); // Lock the UI into Phase 2
                     setSysMessage("PHASE 1 COMPLETE. OTP SENT TO YOUR SECURE INBOX.");
                     setErrors({});
+                } else {
+                    onLogin(data.loginUser);
                 }
             } catch (err) {
                 setErrors({ password: err.message || "INVALID CREDENTIALS." });
