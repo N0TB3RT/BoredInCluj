@@ -1,36 +1,31 @@
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import resend
+import os
+from dotenv import load_dotenv
 
-# --- SMTP CONFIGURATION ---
-# Replace these with your actual Gmail address and the 16-character App Password
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 465
-SENDER_EMAIL = "boredincluj@gmail.com"
-SENDER_PASSWORD = "iwec bscv bulo nkcm"
+# ⚠️ SECURITY WARNING: If your GitHub repo is public, anyone can see this key!
+# Future upgrade: use os.environ.get("RESEND_API_KEY") and a .env file.
+load_dotenv()
+
+resend.api_key = os.getenv("RESEND_API_KEY")
 
 def send_system_email(to_email: str, subject: str, html_body: str):
     """
-    Opens a secure SSL tunnel to Gmail and transmits an HTML email.
+    Transmits an HTML email using the Resend API over standard, unblocked HTTPS (Port 443).
     """
     try:
-        # 1. Package the email envelope
-        msg = MIMEMultipart()
-        msg["From"] = SENDER_EMAIL
-        msg["To"] = to_email
-        msg["Subject"] = subject
+        # NOTE: onboarding@resend.dev is the default testing address.
+        # Once you verify your domain in Resend, change this to something like:
+        # "Bored In Cluj Security <noreply@boredincluj.me>"
+        r = resend.Emails.send({
+            "from": "Bored In Cluj <onboarding@resend.dev>",
+            "to": to_email,
+            "subject": subject,
+            "html": html_body
+        })
 
-        # 2. Attach the HTML payload
-        msg.attach(MIMEText(html_body, "html"))
-
-        # 3. Connect to the server and fire
-        with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT) as server:
-            server.login(SENDER_EMAIL, SENDER_PASSWORD)
-            server.sendmail(SENDER_EMAIL, to_email, msg.as_string())
-
-        print(f"📧 SUCCESS: Transmitted email to {to_email}")
+        print(f"📧 SUCCESS: Transmitted API email to {to_email}")
         return True
 
     except Exception as e:
-        print(f"❌ SMTP ERROR: Failed to send email to {to_email}. Details: {e}")
+        print(f"❌ API EMAIL ERROR: Failed to send email to {to_email}. Details: {e}")
         return False

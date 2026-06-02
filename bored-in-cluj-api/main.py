@@ -36,8 +36,8 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",       # Local React development
     "https://localhost:5173",      # Local Secure React
-    # "http://YOUR_DROPLET_IP",    # We will uncomment and add this later!
-     "https://boredincluj.me"     # Your future domain!
+    "https",    # We will uncomment and add this later!
+    "https://boredincluj.me"     # Your future domain!
 ]
 
 # Mount Static File System to make images visible via public URLs

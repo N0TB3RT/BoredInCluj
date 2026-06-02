@@ -40,7 +40,7 @@ export default function CityComms({
     const [activeLobby, setActiveLobby] = useState(null);
     const [lobbyLocked, setLobbyLocked] = useState(false);
 
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    const API_URL = import.meta.env.VITE_API_URL || 'https://10.200.251.90:8000';
     const WS_URL = API_URL.replace(/^http/, 'ws');
 
     useEffect(() => {
