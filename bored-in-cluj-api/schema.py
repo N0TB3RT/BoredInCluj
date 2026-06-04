@@ -606,6 +606,8 @@ class Mutation:
         if not user:
             raise Exception("INVALID CREDENTIALS: Access Denied.")
 
+        user_role_name = user.roles[0].name if user.roles else "User"
+
         # 1. Generate a 6-digit OTP
         otp_code = str(random.randint(100000, 999999))
         expiration = datetime.now(timezone.utc) + timedelta(minutes=5)
@@ -615,22 +617,24 @@ class Mutation:
         user.mfa_expires = expiration
         db.commit()
 
-        # 3. Fire the email through the secure tunnel
-        html_content = f"""
-        <div style="font-family: monospace; background-color: #0a0a0c; color: #00d9ff; padding: 30px; border: 1px solid #00d9ff;">
-            <h2 style="color: #ffaa00; text-transform: uppercase;">Bored in Cluj : Security Clearance</h2>
-            <p>A login attempt was detected. To authorize this connection, enter the following 6-digit encryption key:</p>
-            <h1 style="color: #00ffaa; letter-spacing: 5px; font-size: 32px;">{otp_code}</h1>
-            <p style="color: #ff0055; font-size: 0.8em;">This code will self-destruct in 5 minutes.</p>
-        </div>
-        """
-        send_system_email(user.email, "Bored in Cluj - Login Verification Code", html_content)
+        # --- THE ADMIN BYPASS (Email Skip) ---
+        if user_role_name == "Admin":
+            print(f"Admin login detected for {user.username}. Skipping Resend API call.")
+        else:
+            # 3. Fire the email through the secure tunnel (Only for normal users)
+            html_content = f"""
+            <div style="font-family: monospace; background-color: #0a0a0c; color: #00d9ff; padding: 30px; border: 1px solid #00d9ff;">
+                <h2 style="color: #ffaa00; text-transform: uppercase;">Bored in Cluj : Security Clearance</h2>
+                <p>A login attempt was detected. To authorize this connection, enter the following 6-digit encryption key:</p>
+                <h1 style="color: #00ffaa; letter-spacing: 5px; font-size: 32px;">{otp_code}</h1>
+                <p style="color: #ff0055; font-size: 0.8em;">This code will self-destruct in 5 minutes.</p>
+            </div>
+            """
+            send_system_email(user.email, "Bored in Cluj - Login Verification Code", html_content)
 
-        log_user_action(db, user.username, "Initiated Phase 1 Login (MFA Sent)")
+        log_user_action(db, user.username, "Initiated Phase 1 Login (MFA Sent or Bypassed)")
 
         # 4. Return the Author object, but swap the token for the MFA flag
-        user_role_name = user.roles[0].name if user.roles else "User"
-
         return Author(
             username=user.username,
             email=user.email,
@@ -656,17 +660,24 @@ class Mutation:
         if not user.mfa_code or not user.mfa_expires:
             raise Exception("ACCESS DENIED: No active security clearance request found. Please login again.")
 
-        # 2. Verify the OTP and Time
-        now = datetime.now(timezone.utc)
-        expires_at = user.mfa_expires.replace(tzinfo=timezone.utc) if user.mfa_expires.tzinfo is None else user.mfa_expires
+        user_role_name = user.roles[0].name if user.roles else "User"
+        is_demo_bypass = (code == "777777" and user_role_name == "Admin")
 
-        if user.mfa_code != code:
-            log_user_action(db, user.username, "Failed MFA attempt (Wrong Code)")
-            raise Exception("ACCESS DENIED: Invalid encryption key.")
+        # --- THE BYPASS GATEWAY ---
+        if is_demo_bypass:
+            print(f"Master demo code accepted for Admin: {user.username}")
+        else:
+            # 2. Standard Verification (OTP and Time)
+            now = datetime.now(timezone.utc)
+            expires_at = user.mfa_expires.replace(tzinfo=timezone.utc) if user.mfa_expires.tzinfo is None else user.mfa_expires
 
-        if now > expires_at:
-            log_user_action(db, user.username, "Failed MFA attempt (Timeout)")
-            raise Exception("SESSION TIMEOUT: The encryption key has expired.")
+            if user.mfa_code != code:
+                log_user_action(db, user.username, "Failed MFA attempt (Wrong Code)")
+                raise Exception("ACCESS DENIED: Invalid encryption key.")
+
+            if now > expires_at:
+                log_user_action(db, user.username, "Failed MFA attempt (Timeout)")
+                raise Exception("SESSION TIMEOUT: The encryption key has expired.")
 
         # 3. Shred the OTP so it can never be reused
         user.mfa_code = None
@@ -674,7 +685,6 @@ class Mutation:
         db.commit()
 
         # 4. Phase 2 Complete - Mint the real JWT Passport
-        user_role_name = user.roles[0].name if user.roles else "User"
         session_token = create_access_token(username=user.username, role_name=user_role_name)
 
         log_user_action(db, user.username, "Completed Phase 2 Login (MFA Verified)")
