@@ -21,9 +21,11 @@ os.makedirs("static/events", exist_ok=True)
 
 # Context Generator: Injects the database session into GraphQL context
 async def get_context(request: Request):
-    return {"db": SessionLocal(),
-    "request": request
-    }
+    db = SessionLocal()
+    try:
+        yield {"db": db, "request": request}
+    finally:
+        db.close()
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
 graphql_app = GraphQLRouter(

@@ -17,7 +17,7 @@ def send_system_email(to_email: str, subject: str, html_body: str):
         # Once you verify your domain in Resend, change this to something like:
         # "Bored In Cluj Security <noreply@boredincluj.me>"
         r = resend.Emails.send({
-            "from": "Bored In Cluj <onboarding@resend.dev>",
+            "from": "Bored In Cluj <security@boredincluj.me>",
             "to": to_email,
             "subject": subject,
             "html": html_body

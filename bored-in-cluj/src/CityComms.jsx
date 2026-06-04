@@ -41,8 +41,7 @@ export default function CityComms({
     const [lobbyLocked, setLobbyLocked] = useState(false);
 
     const API_URL = import.meta.env.VITE_API_URL || 'https://10.200.251.90:8000';
-    const WS_URL = API_URL.replace(/^http/, 'ws');
-
+    const WS_URL = API_URL.replace(/^http/, 'ws').replace(/\/$/, '');
     useEffect(() => {
         const ws = new WebSocket(`${WS_URL}/ws/chat`);
         wsRef.current = ws;

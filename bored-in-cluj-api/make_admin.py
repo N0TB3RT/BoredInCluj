@@ -28,4 +28,4 @@ def assign_role(target_username: str, role_name: str):
 
 if __name__ == "__main__":
     # You can change "Moderator" to "Admin" or "User" to test different locks!
-    assign_role("BossuTriceps", "Admin")
+    assign_role("admin", "Admin")
